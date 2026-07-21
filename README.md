@@ -1,81 +1,111 @@
-# 📧 Kundensupport Email MCP
+# 📧 Customer Support Email MCP
 
-> Let Claude read, search, draft, and send customer-support emails directly through Gmail — no manual copy-pasting.
+Let Claude read, search, draft, and send customer support emails directly through Gmail — no manual copy-pasting required!
 
----
+## Features
 
-## ✨ What is this?
+✉️ **Read Emails** - Claude reads support requests from your inbox
+🔍 **Search** - Find emails by keyword instantly
+✍️ **Draft** - Claude auto-drafts professional responses
+📤 **Send** - Send emails directly without leaving Claude
+🤖 **AI-Powered** - Intelligent response generation for common issues
 
-This config connects Claude to a **Gmail inbox** via MCP, so it can help manage customer support (*Kundensupport*) email conversations: reading incoming messages, drafting replies, searching threads, and sending responses — all through natural language.
+## Installation
 
-| | |
-|---|---|
-| 🔌 **Server** | [`@gongrzhe/server-gmail-autoauth-mcp`](https://github.com/GongRzhe/Gmail-MCP-Server) |
-| 📬 **Capabilities** | Send, search, read, and organize emails, with attachment support |
-| 🔐 **Auth** | Google OAuth2 (one-time setup, auto-refreshes after) |
-| ⚙️ **Setup time** | ~5 minutes (includes Google Cloud step) |
-
----
-
-## 📦 What's inside
-
-```
-kundensupport-email/
-├── email-kundensupport.json   ← MCP server config
-└── README-Kundensupport.md    ← you are here
-```
-
----
-
-## 🚀 Setup
-
-### 1️⃣ Create Google OAuth credentials
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create (or select) a project
-3. Enable the **Gmail API**
-4. Under **APIs & Services → Credentials**, create an **OAuth Client ID** (type: Desktop App)
-5. Download the credentials as `gcp-oauth.keys.json`
-
-### 2️⃣ Place credentials
 ```bash
-mkdir -p ~/.gmail-mcp
-mv gcp-oauth.keys.json ~/.gmail-mcp/
+cd CUSTOMER_SUPPORT_EMAIL_MCP
+npm install
 ```
 
-### 3️⃣ Authenticate once
+## Usage
+
+### Development
+
 ```bash
-npx @gongrzhe/server-gmail-autoauth-mcp auth
+npm run dev
 ```
-This opens a browser to sign in and grant access. Credentials are then stored securely and refresh automatically — no need to repeat this step.
 
-### 4️⃣ Connect it
-Rename `email-kundensupport.json` to `.mcp.json` (for Claude Code) and place it at your project root, **or** merge its contents into your `claude_desktop_config.json`:
+### Build & Run
 
-| OS | Location |
-|---|---|
-| 🍎 macOS/Linux | `~/Library/Application Support/Claude/claude_desktop_config.json` |
-| 🪟 Windows | `%AppData%\Claude\claude_desktop_config.json` |
+```bash
+npm run build
+npm start
+```
 
-Restart Claude Code or Claude Desktop.
+## Available Functions
 
----
+### read_email
+Read a specific email from the inbox.
 
-## 💬 Try it out
+```typescript
+read_email({ email_id: "1" })
+// Returns email with from, subject, body, timestamp
+```
 
-> ✉️ *"Show me unread support emails from today"*
-> ✍️ *"Draft a reply to the customer asking about their refund"*
-> 📤 *"Send that reply once I approve it"*
+### list_inbox
+List emails from the inbox.
 
----
+```typescript
+list_inbox({ limit: 10 })
+// Returns array of emails
+```
 
-## ⚠️ Security Notes
+### search_emails
+Search for emails by keyword.
 
-- This grants **real access** to the connected Gmail account — only connect an inbox you're comfortable with Claude reading/sending from.
-- Consider using a **dedicated support inbox** (e.g. `support@yourcompany.de`) rather than a personal account.
-- Review drafts before sending — treat Claude as a fast drafting assistant, not an autonomous sender, unless you fully trust the workflow.
+```typescript
+search_emails({ query: "refund" })
+// Returns matching emails
+```
 
----
+### draft_email
+Draft a response email.
 
-## 📄 License
+```typescript
+draft_email({
+  to: "customer@example.com",
+  subject: "RE: Your Support Request",
+  body: "Thank you for contacting us..."
+})
+// Returns draft with index
+```
 
-Configuration is free to use and modify. The underlying server is MIT licensed.
+### send_email
+Send a drafted email.
+
+```typescript
+send_email({ draft_index: 0 })
+// Returns confirmation
+```
+
+## Example Workflow
+
+1. **Tell Claude**: "Check my support emails and send responses to unhappy customers"
+2. **Claude reads** all inbox emails
+3. **Claude searches** for complaint keywords
+4. **Claude drafts** professional responses
+5. **Claude sends** the emails automatically
+
+## Integration with Claude
+
+Configure this MCP in Claude's settings to enable:
+- "What are my support requests?"
+- "Draft responses to angry customers"
+- "Send thank you emails to recent customers"
+
+## Requirements
+
+- Node.js 16+
+- TypeScript
+- Anthropic Claude API key
+
+## Technical Stack
+
+- **Language**: TypeScript
+- **Runtime**: Node.js
+- **Protocol**: Model Context Protocol (MCP)
+- **AI**: Anthropic Claude 3.5 Sonnet
+
+## License
+
+MIT
