@@ -1,18 +1,48 @@
 # 📧 Customer Support Email MCP
 
+<p>
+  <a href="https://github.com/anslemdavid/CUSTOMER_SUPPORT_EMAIL_MCP">
+    <img src="https://img.shields.io/badge/View%20Code-181717?style=for-the-badge&logo=github&logoColor=white" alt="view code" />
+  </a>
+  <img src="https://img.shields.io/badge/Language-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Runtime-Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/License-MIT-000?style=for-the-badge" alt="license" />
+</p>
+
+## Built with / Development tools
+
+<p>
+  <img src="https://skillicons.dev/icons?i=typescript,nodejs,npm,vscode,java,cs,css,python" alt="tools" />
+</p>
+
+**Languages & Frameworks:** TypeScript (Node.js) — recommended: Node 18, TypeScript 5
+
+**Integrations:** Gmail API, Anthropic Claude
+
+**Editor:** VS Code
+
+---
+
 Let Claude read, search, draft, and send customer support emails directly through Gmail — no manual copy-pasting required!
 
 ## Features
 
-✉️ **Read Emails** - Claude reads support requests from your inbox
-🔍 **Search** - Find emails by keyword instantly
-✍️ **Draft** - Claude auto-drafts professional responses
-📤 **Send** - Send emails directly without leaving Claude
-🤖 **AI-Powered** - Intelligent response generation for common issues
+- Read emails from Gmail
+- Search and filter by keywords
+- Draft professional responses using Claude
+- Send drafted emails through Gmail (with proper OAuth setup)
+
+## Requirements
+
+- Node.js (recommended: 18+)
+- npm
+- Claude / Anthropic API key (for AI features)
+- Gmail API credentials (OAuth client ID and secret)
 
 ## Installation
 
 ```bash
+git clone https://github.com/anslemdavid/CUSTOMER_SUPPORT_EMAIL_MCP
 cd CUSTOMER_SUPPORT_EMAIL_MCP
 npm install
 ```
@@ -32,7 +62,22 @@ npm run build
 npm start
 ```
 
-## Available Functions
+## Environment variables
+
+Copy `.env.example` and fill in your keys (do NOT commit secrets):
+
+```bash
+# Anthropic / Claude
+ANTHROPIC_API_KEY=your_anthropic_key
+
+# Gmail OAuth
+GMAIL_CLIENT_ID=your_client_id
+GMAIL_CLIENT_SECRET=your_client_secret
+GMAIL_REDIRECT_URI=http://localhost:3000/oauth2callback
+GMAIL_REFRESH_TOKEN=your_refresh_token
+```
+
+## Example Functions
 
 ### read_email
 Read a specific email from the inbox.
@@ -40,22 +85,6 @@ Read a specific email from the inbox.
 ```typescript
 read_email({ email_id: "1" })
 // Returns email with from, subject, body, timestamp
-```
-
-### list_inbox
-List emails from the inbox.
-
-```typescript
-list_inbox({ limit: 10 })
-// Returns array of emails
-```
-
-### search_emails
-Search for emails by keyword.
-
-```typescript
-search_emails({ query: "refund" })
-// Returns matching emails
 ```
 
 ### draft_email
@@ -78,34 +107,18 @@ send_email({ draft_index: 0 })
 // Returns confirmation
 ```
 
-## Example Workflow
+---
 
-1. **Tell Claude**: "Check my support emails and send responses to unhappy customers"
-2. **Claude reads** all inbox emails
-3. **Claude searches** for complaint keywords
-4. **Claude drafts** professional responses
-5. **Claude sends** the emails automatically
+## Security & Notes
 
-## Integration with Claude
+- Do NOT commit API keys or OAuth credentials. Use environment variables or GitHub Secrets.
+- For production, use a secure secrets store and rotate credentials regularly.
 
-Configure this MCP in Claude's settings to enable:
-- "What are my support requests?"
-- "Draft responses to angry customers"
-- "Send thank you emails to recent customers"
+## Integration Notes
 
-## Requirements
+- Configure Gmail OAuth credentials in Google Cloud Console and add the redirect URI used by this project.
+- Store Anthropic/Claude API keys in ANTHROPIC_API_KEY env var.
 
-- Node.js 16+
-- TypeScript
-- Anthropic Claude API key
+## Contact
 
-## Technical Stack
-
-- **Language**: TypeScript
-- **Runtime**: Node.js
-- **Protocol**: Model Context Protocol (MCP)
-- **AI**: Anthropic Claude 3.5 Sonnet
-
-## License
-
-MIT
+For issues or questions, open an issue or contact: anslemdavdmuse@email.com
